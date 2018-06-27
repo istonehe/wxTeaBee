@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const auth = require('../../utils/auth.js')
 
 Page({
   data: {
@@ -16,6 +17,10 @@ Page({
     })
   },
   onLoad: function () {
+    
+    
+
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="school_list">
+    <view class="school_item">
+      麦学习机构
+    </view>
+    <view class="school_item">
+      蜜蜂学校
+    </view>
+  </view>
+</view>
