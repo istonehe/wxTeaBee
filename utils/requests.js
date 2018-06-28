@@ -96,19 +96,51 @@ function getSMScodePromise(uuid, inputvalue, phone_numbers){
         if (data.code == 1){
           resolve(data)
         } else{
-          // reject(data)
-          resolve(data)
+          reject(data)
         }
+      },
+      fail: (res) => {
+        let data = res.data;
+        reject(data)
       }
     })
   });
-
   return getSMScode;
+}
+
+function registerTeacherPromise(teacher_id, telephone, password, uuid, phonecode){
+  let registerTeacher = new Promise((resolve, reject) => {
+    wx.request({
+      url: url + '/v1/public/teacher/wxregister',
+      data: {
+        teacher_id: teacher_id,
+        telephone: telephone,
+        password: password,
+        uuid: uuid,
+        phonecode: phonecode
+      },
+      method: 'PUT',
+      success: (res) => {
+        let data = res.data;
+        if (data.code == 1) {
+          resolve(data)
+        } else {
+          reject(data)
+        }
+      },
+      fail: (res) => {
+        let data = res.data;
+        reject(data)
+      }
+    })
+  });
+  return registerTeacher;
 }
 
 module.exports = {
   getTeacherInfoPromise: getTeacherInfoPromise,
   getImgCodePromise: getImgCodePromise,
   getPhoneExistPromise: getPhoneExistPromise,
-  getSMScodePromise: getSMScodePromise
+  getSMScodePromise: getSMScodePromise,
+  registerTeacherPromise: registerTeacherPromise
 }

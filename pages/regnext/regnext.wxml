@@ -13,7 +13,7 @@
     <view class="code_box">
       <view class="input_box">
         <image src="../../images/verify.png" class="input_ico"></image>
-        <input placeholder="输入短信验证码" placeholder-class="input_placeholder" type="number"/>
+        <input placeholder="输入短信验证码" placeholder-class="input_placeholder" value="{{smsCode}}" type="number" bindinput="smsCodeInput" maxlength="6"/>
       </view>
       <view class="sms_btn_off" wx:if="{{!canGetSMS}}">
         {{getSMSBtnText}}
@@ -24,12 +24,13 @@
 
     </view>
     <view class="input_box">
-      <image src="../../images/pass.png" class="input_ico"></image><input placeholder="设置密码" placeholder-class="input_placeholder" password="true"/>
+      <image src="../../images/pass.png" class="input_ico"></image>
+      <input placeholder="设置密码" placeholder-class="input_placeholder" password="true" bindinput="passWordInput"/>
     </view>
-    <view class="register_btn_off" wx:if="{{!phone_isok}}">
+    <view class="register_btn_off" wx:if="{{!(smsCode.length == 6 && password.length >= 6 && smsUUID)}}">
       提交
     </view>
-    <view class="register_btn_on" wx:if="{{phone_isok}}" bind:tap="toNextStap">
+    <view class="register_btn_on" wx:if="{{smsCode.length == 6 && password.length >= 6 && smsUUID}}" bind:tap="submitRegister">
       提交
     </view>
 

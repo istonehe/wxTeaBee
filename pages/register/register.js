@@ -113,7 +113,7 @@ Page({
   toNextStap: function(){
     let that = this;
     wx.navigateTo({
-      url: 'nextregister'
+      url: '../regnext/regnext?phone=' + that.data.phone
     })
   },
   getUserInfo: function (e) {
@@ -123,37 +123,50 @@ Page({
 
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+    if (e.detail.userInfo) {
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      })
 
-    //交换敏感数据
-    wx.request({
-      url: url + '/v1/public/teacherwxsecret/' + teacher_id,
-      method: 'PUT',
-      data: {
-        nickname: e.detail.userInfo.nickName,
-        city: e.detail.userInfo.city,
-        province: e.detail.userInfo.province,
-        country: e.detail.userInfo.country,
-        gender: e.detail.userInfo.gender,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        encryptedData: e.detail.encryptedData,
-        iv: e.detail.iv
-      },
-      success: function (res) {
-        console.log(res.data)
-        if (res.data.code == 1) {
-          console.log('数据正常获取')
-        } else {
-          wx.showToast({
-            title: '服务器开小差，请重试',
-            icon: 'none',
-            duration: 2000
-          })
+      //交换敏感数据
+      wx.request({
+        url: url + '/v1/public/teacherwxsecret/' + teacher_id,
+        method: 'PUT',
+        data: {
+          nickname: e.detail.userInfo.nickName,
+          city: e.detail.userInfo.city,
+          province: e.detail.userInfo.province,
+          country: e.detail.userInfo.country,
+          gender: e.detail.userInfo.gender,
+          avatarUrl: e.detail.userInfo.avatarUrl,
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv
+        },
+        success: function (res) {
+          console.log(res.data)
+          if (res.data.code == 1) {
+            console.log('数据正常获取')
+          } else {
+            wx.showToast({
+              title: '服务器开小差，请重试',
+              icon: 'none',
+              duration: 2000
+            })
+          }
         }
-      }
-    })
+      })
+
+    }else{
+      wx.showToast({
+        title: '允许授权可以获得更好的服务哦！',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+
+
+
+    
   }
 })
