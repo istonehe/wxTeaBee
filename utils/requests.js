@@ -20,8 +20,8 @@ function getTeacherInfoPromise(){
           auth.beeLoginPromise();
         } else if (data.code == 1) {
           resolve(data);
-          let user_info = data.teacher;
-          wx.setStorageSync('teacher_info', user_info);
+          let teacher_info = data.teacher;
+          wx.setStorageSync('teacher_info', teacher_info);
         } else {
           wx.showToast({
             title: data.message || '服务器开小差了',
@@ -36,6 +36,79 @@ function getTeacherInfoPromise(){
   return getTeacherInfo;
 }
 
+function getImgCodePromise(){
+  let getImgCode = new Promise((resolve, reject) => {
+    wx.request({
+      url: url + '/v1/public/imgcode',
+      success: (res) => {
+        let data = res.data;
+        console.log(data)
+        if (data.code == 1){
+          resolve(data)
+        }else{
+          reject(data)
+        }
+      },
+      fail: (res) => {
+        let data = res.data;
+        reject(data)
+      }
+    })
+  })
+
+  return getImgCode;
+}
+
+function getPhoneExistPromise(phone){
+  let getPhoneExist = new Promise((resolve, reject) => {
+    wx.request({
+      url: url + '/v1/public/phoneexist/' + phone,
+      success: (res) => {
+        let data = res.data;
+        console.log(data)
+        if (data.code == 1) {
+          resolve(data)
+        } else {
+          reject(data)
+        }
+      },
+      fail: (res) => {
+        let data = res.data;
+        reject(data)
+      }
+    })
+  });
+  return getPhoneExist;
+}
+
+function getSMScodePromise(uuid, inputvalue, phone_numbers){
+  let getSMScode = new Promise((resolve, reject) => {
+    wx.request({
+      url: url + '/v1/public/sendsms',
+      data: {
+        uuid: uuid,
+        inputvalue: inputvalue,
+        phone_numbers: phone_numbers
+      },
+      method: 'POST',
+      success: (res) => {
+        let data = res.data;
+        if (data.code == 1){
+          resolve(data)
+        } else{
+          // reject(data)
+          resolve(data)
+        }
+      }
+    })
+  });
+
+  return getSMScode;
+}
+
 module.exports = {
-  getTeacherInfoPromise: getTeacherInfoPromise
+  getTeacherInfoPromise: getTeacherInfoPromise,
+  getImgCodePromise: getImgCodePromise,
+  getPhoneExistPromise: getPhoneExistPromise,
+  getSMScodePromise: getSMScodePromise
 }

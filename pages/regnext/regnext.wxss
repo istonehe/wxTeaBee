@@ -1,0 +1,147 @@
+page{
+  background: #5c90c9;
+  font-size:34rpx;
+  height:100%;
+}
+
+.container{
+  justify-content: center;
+}
+
+.now_phone{
+  height:90rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom:40rpx;
+  font-size:46rpx;
+  color:#fff;
+}
+
+.input_box{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 580rpx;
+  height: 90rpx;
+  border: 3rpx solid #fff;
+  border-radius: 45rpx;
+  margin-bottom: 40rpx;
+  line-height: 90rpx;
+  font-size:28rpx;
+}
+
+.input_placeholder{
+  color:#fff;
+}
+
+.input_box input{
+  width:480rpx;
+  height:90rpx;
+  color:#fff;
+}
+
+.input_ico{
+  width:56rpx;
+  height:56rpx;
+  display: block;
+  margin-left:28rpx;
+}
+
+.code_box{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.code_box .input_box{
+  width:340rpx;
+  margin:0;
+}
+
+.code_box .input_box input{
+  width: 240rpx;
+}
+
+.verifyimage{
+  box-sizing: border-box;
+  width:210rpx;
+  height:90rpx;
+  background:#eee;
+  display: block;
+  border-radius: 45rpx;
+  border: 3rpx solid #3b6fa8;
+}
+
+.sms_btn_off{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:210rpx;
+  height:90rpx;
+  background:#5387bf;
+  border-radius: 45rpx;
+  font-size:28rpx;
+  color:#8db4df;
+}
+
+.sms_btn_on{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:210rpx;
+  height:90rpx;
+  background:#4a7fba;
+  border-radius: 45rpx;
+  font-size:28rpx;
+  color:#c4dcf7;
+}
+
+.register_btn_off{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:580rpx;
+  height:90rpx;
+  background:#5387bf;
+  border-radius: 45rpx;
+  font-size:28rpx;
+  color:#8db4df;
+}
+
+.register_btn_on{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:580rpx;
+  height:90rpx;
+  background:#4074ad;
+  border-radius: 45rpx;
+  font-size:28rpx;
+  color:#fff;
+}
+
+.tips_box{
+  width: 580rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 28rpx;
+  text-align: center;
+  margin-top: 20rpx;
+  padding-bottom: 300rpx;
+}
+
+.error_tips{
+  color: #ffd3e4;
+}

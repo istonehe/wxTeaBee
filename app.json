@@ -1,10 +1,10 @@
 {
   "pages":[
+    "pages/regnext/regnext",
     "pages/register/register",
     "pages/index/index",
     "pages/schoollist/schoollist",
     "pages/asklist/asklist"
-    
   ],
   "window":{
     "backgroundTextStyle":"light",

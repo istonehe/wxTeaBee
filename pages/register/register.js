@@ -1,20 +1,27 @@
 //login.js
 const app = getApp()
+const config = require('../../utils/config.js')
+const url = config.config.host
 const auth = require('../../utils/auth.js')
 const requests = require('../../utils/requests.js')
+
 Page({
-  data:{
+  data: {
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    codeImgUrl: '',
+    phone: '',
+    error_tips: '',
+    phone_isok: false
   },
-  onLoad:function(){
+  onLoad: function () {
     let that = this;
     // 检查是否有token和用户信息
     let token = wx.getStorageSync('token') || '';
     let teacher_info = wx.getStorageSync('teacher_info') || {};
 
-    if (token && (Object.keys(teacher_info).length != 0) ) {
+    if (token && (Object.keys(teacher_info).length != 0)) {
       //使用token获取用户信息
       requests.getTeacherInfoPromise().then(
         () => {
@@ -31,7 +38,7 @@ Page({
       auth.beeLoginPromise().then(
         function () {
           let teacher_info = wx.getStorageSync('teacher_info') || {};
-          if (teacher_info.register){
+          if (teacher_info.register) {
             wx.redirectTo({
               url: '../asklist/asklist'
             })
@@ -68,12 +75,85 @@ Page({
     }
 
   },
+  inputPhone: function (e) {
+    let that = this;
+    console.log(e.detail.value)
+    let phone = e.detail.value;
+    that.setData({
+      phone: phone
+    });
+    if (phone.length == 11) {
+      const reg = /^((1[3-8][0-9])+\d{8})$/;
+      if (reg.test(phone)) {
+        requests.getPhoneExistPromise(phone).then(
+          (data) => {
+            that.setData({
+              phone_isok: true,
+              error_tips: ''
+            })
+          },
+          (data) => {
+            that.setData({
+              error_tips: data.message
+            })
+          }
+        );
+      } else {
+        that.setData({
+          error_tips: '请输入正确的手机号'
+        })
+      }
+    } else {
+      that.setData({
+        phone_isok: false,
+        error_tips: ''
+      })
+    }
+  },
+  toNextStap: function(){
+    let that = this;
+    wx.navigateTo({
+      url: 'nextregister'
+    })
+  },
   getUserInfo: function (e) {
+    let that = this;
+    let teacher_info = wx.getStorageSync('teacher_info') || []
+    let teacher_id = teacher_info.id
+
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+
+    //交换敏感数据
+    wx.request({
+      url: url + '/v1/public/teacherwxsecret/' + teacher_id,
+      method: 'PUT',
+      data: {
+        nickname: e.detail.userInfo.nickName,
+        city: e.detail.userInfo.city,
+        province: e.detail.userInfo.province,
+        country: e.detail.userInfo.country,
+        gender: e.detail.userInfo.gender,
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv
+      },
+      success: function (res) {
+        console.log(res.data)
+        if (res.data.code == 1) {
+          console.log('数据正常获取')
+        } else {
+          wx.showToast({
+            title: '服务器开小差，请重试',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
     })
   }
 })

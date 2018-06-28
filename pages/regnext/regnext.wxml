@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="register_box">
+    <view class="now_phone">
+      {{phone}}
+    </view>
+    <view class="code_box">
+      <view class="input_box">
+        <image src="../../images/imgver.png" class="input_ico"></image>
+        <input placeholder="输入右侧数字" placeholder-class="input_placeholder" value="{{imgCode}}" type="number" bindinput="ImgCodeInput" maxlength="4"/>
+      </view>
+      <image src="{{codeImgUrl}}" class="verifyimage"></image>
+    </view>
+    <view class="code_box">
+      <view class="input_box">
+        <image src="../../images/verify.png" class="input_ico"></image>
+        <input placeholder="输入短信验证码" placeholder-class="input_placeholder" type="number"/>
+      </view>
+      <view class="sms_btn_off" wx:if="{{!canGetSMS}}">
+        {{getSMSBtnText}}
+      </view>
+      <view class="sms_btn_on" wx:if="{{canGetSMS}}" bindtap="getSMScode">
+        {{getSMSBtnText}}
+      </view>
+
+    </view>
+    <view class="input_box">
+      <image src="../../images/pass.png" class="input_ico"></image><input placeholder="设置密码" placeholder-class="input_placeholder" password="true"/>
+    </view>
+    <view class="register_btn_off" wx:if="{{!phone_isok}}">
+      提交
+    </view>
+    <view class="register_btn_on" wx:if="{{phone_isok}}" bind:tap="toNextStap">
+      提交
+    </view>
+
+    <view class="tips_box">
+      <view class="error_tips" wx:if="{{error_tips}}">
+        {{error_tips}}
+      </view>
+    </view>
+  </view>
+</view>
